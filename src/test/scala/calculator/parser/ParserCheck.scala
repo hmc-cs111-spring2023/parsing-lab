@@ -5,7 +5,7 @@ import org.scalacheck.Prop.forAll
 import org.scalacheck.Properties
 import calculator.ir._
 
-object CalcParseSpec extends Properties("Parser") {
+object CalcParsePropertySpec extends Properties("Parser") {
 
   // some syntactic sugar for expressing parser tests
   extension (input: String)
@@ -36,5 +36,13 @@ object CalcParseSpec extends Properties("Parser") {
 
   property("parentheses") = forAll { (n1: Int, n2: Int, n3: Int) =>
     s"($n1 + $n2) * $n3" ~> (Times(Plus(Num(n1), Num(n2)), Num(n3)))
+  }
+
+  property("precedence 1") = forAll { (n1: Int, n2: Int, n3: Int) =>
+    s"$n1 + $n2 * $n3" ~> (Plus(Num(n1), Times(Num(n2), Num(n3))))
+  }
+
+  property("precedence 2") = forAll { (n1: Int, n2: Int, n3: Int) =>
+    s"$n1 * $n2 + $n3" ~> (Plus(Times(Num(n1), Num(n2)), Num(n3)))
   }
 }

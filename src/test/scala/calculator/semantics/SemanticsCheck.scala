@@ -7,7 +7,7 @@ import Gen._
 import Arbitrary.arbitrary
 import calculator.ir._
 
-object CalcInterpreterSpec extends Properties("Evaluator") {
+object CalcPropertySpec extends Properties("Evaluator") {
 
   // some syntactic sugar for expressing interpreter tests
   extension (input: Expr)
